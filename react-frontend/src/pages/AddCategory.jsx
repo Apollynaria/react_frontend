@@ -1,39 +1,41 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import http from "../../http-common";
 import { Navigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { categoryReducer, initialState } from './AddCategory.state';
 
 function AddCategory() {
-    const [name, setName] = useState("");
-    const [submitted, setSubmitted] = useState(false);
+    const [state, dispatch] = useReducer(categoryReducer, initialState);
 
     const handleChange = (event) => {
-        setName(event.target.value);
+        dispatch({ type: 'CHANGE_NAME', payload: event.target.value });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = {
-            name: name,
+            name: state.name,
         };
         http
             .post("/addCategory", data)
             .then(() => {
-                setSubmitted(true);
+                dispatch({ type: 'SUBMIT_SUCCESS' });
             })
             .catch((e) => {
-                console.log(e);
+                dispatch({ type: 'SUBMIT_ERROR', payload: e });
             });
     };
+
+    const { name, submitted, error } = state;
 
     return !submitted ? (
         <form onSubmit={handleSubmit}>
             <Form.Group>
                 <Row>
-                <Form.Label>Создание новой категории</Form.Label>
+                    <Form.Label>Создание новой категории</Form.Label>
                     <Col>
                         <Form.Control
                             required
@@ -45,7 +47,8 @@ function AddCategory() {
                         />
                     </Col>
                     <Col>
-                        <Button variant="success" type="submit">Добавить</Button>{''}
+                        <Button variant="success" type="submit">Добавить</Button>
+                        {error && <p>Произошла ошибка при добавлении категории: {error.message}</p>}
                     </Col>
                 </Row>
             </Form.Group>

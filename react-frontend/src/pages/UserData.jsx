@@ -16,7 +16,7 @@ function UserData() {
     const [user, setUser] = useState({ // useState - стандартный метод для определения начального состояния
         id: id, // идентификатор из параметров
         name: "", // имя в начальном состоянии не заполняется
-        login: "",
+        username: "",
         password: "",
     });
 
@@ -35,7 +35,7 @@ function UserData() {
                     setUser(prevUser => ({
                         ...prevUser,
                         name: response.data.name,
-                        login: response.data.username,
+                        username: response.data.username,
                         password: response.data.password,
                     }));
                 })
@@ -49,20 +49,21 @@ function UserData() {
 
 
     function handleChange(event) {
-        setUser({
-            ...user, // копируем все свойства объекта
-            name: event.target.value // обновляем name
+        setUser(prevUser => ({
+            ...prevUser, // копируем все свойства объекта
+            [event.target.name]: event.target.value // обновляем name
 
-        });
+        }));
     }
 
     function handleSubmit(event) {
         event.preventDefault();
         var data = {
             name: user.name,
-            login: user.login,
+            username: user.username,
             password: user.password
         };
+        console.log(data)
         http
             .post("/updateUser/" + user.id, data)
             .then(() => { // запрос выполнился успешно
@@ -87,7 +88,7 @@ function UserData() {
     return !submitted ? <div><form onSubmit={handleSubmit}>
         <Form.Group>
             <Row>
-                <Form.Label>Категория</Form.Label>
+                <Form.Label>Пользователь</Form.Label>
                 <Col>
                     <Form.Control
                         required
@@ -102,19 +103,9 @@ function UserData() {
                     <Form.Control
                         required
                         type="text"
-                        name="login"
-                        value={user.login}
+                        name="username"
+                        value={user.username}
                         placeholder="Логин"
-                        onChange={handleChange}
-                    />
-                </Col>
-                <Col>
-                    <Form.Control
-                        required
-                        type="password"
-                        name="password"
-                        value=""
-                        placeholder="Новый пароль"
                         onChange={handleChange}
                     />
                 </Col>

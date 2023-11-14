@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import http from "../../http-common";
 import { Link } from 'react-router-dom';
 import Category from '../components/category/Category';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useCategories } from './Categories.context';
 
 
 function Categories() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    http
-      .get("/categories")
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }, []);
-
-  const list = categories.map((category, index) => (
-    <Link to={`/category/${category.id}`} param1={category.id} key={index}>
-      <ListGroup.Item>
-        <Category key={index} id={category.id} content={category.name} />
-      </ListGroup.Item>
-    </Link>
-  ));
+  const categories = useCategories();
 
   return (
     <div>
@@ -36,9 +18,20 @@ function Categories() {
         </Button>
       </Link>
       <ListGroup>
-        {list.length > 0 ? list : "Подождите, идёт загрузка данных"}
+        {categories.length > 0 ? (
+          categories.map((category, index) => (
+            <Link to={`/category/${category.id}`} param1={category.id} key={index}>
+              <ListGroup.Item>
+                <Category id={category.id} />
+              </ListGroup.Item>
+            </Link>
+          ))
+        ) : "Подождите, идёт загрузка данных"}
       </ListGroup>
     </div>
+    //   <ListGroup>
+    //     {list.length > 0 ? list : "Подождите, идёт загрузка данных"}
+    //   </ListGroup>
   );
 }
 

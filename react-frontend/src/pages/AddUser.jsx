@@ -43,30 +43,30 @@ function AddUser() {
                     <Col>
                         <Form.Control
                             required
-                            type="text" 
-                            name="name" 
-                            value={user.name} 
-                            placeholder="Имя" 
+                            type="text"
+                            name="name"
+                            value={user.name}
+                            placeholder="Имя"
                             onChange={handleChange}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             required
-                            type="text" 
-                            name="username" 
-                            value={user.username} 
-                            placeholder="Логин" 
+                            type="text"
+                            name="username"
+                            value={user.username}
+                            placeholder="Логин"
                             onChange={handleChange}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             required
-                            type="password" 
-                            name="password" 
-                            value={user.password} 
-                            placeholder="Пароль" 
+                            type="password"
+                            name="password"
+                            value={user.password}
+                            placeholder="Пароль"
                             onChange={handleChange}
                         />
                     </Col>
