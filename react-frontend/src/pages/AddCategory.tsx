@@ -1,32 +1,38 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext, ChangeEvent, FormEvent } from 'react';
 import http from "../../http-common";
 import { Navigate } from 'react-router-dom';
+import { CategoryContext } from './Categories.context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 import { categoryReducer, initialState } from './AddCategory.state';
 
 function AddCategory() {
-    const [state, dispatch] = useReducer(categoryReducer, initialState);
+    const categoryContext = useContext(CategoryContext);
 
-    const handleChange = (event) => {
-        dispatch({ type: 'CHANGE_NAME', payload: event.target.value });
+    const { updateCategories } = categoryContext;
+
+    const [state, localDispatch] = useReducer(categoryReducer, initialState);
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        localDispatch({ type: 'CHANGE_NAME', payload: event.target.value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = {
             name: state.name,
         };
-        http
-            .post("/addCategory", data)
-            .then(() => {
-                dispatch({ type: 'SUBMIT_SUCCESS' });
-            })
-            .catch((e) => {
-                dispatch({ type: 'SUBMIT_ERROR', payload: e });
-            });
+
+        try {
+            await http.post("/addCategory", data);
+            localDispatch({ type: 'SUBMIT_SUCCESS' });
+            updateCategories(); // Вызываем функцию обновления категорий
+        } catch (error) {
+            localDispatch({ type: 'SUBMIT_ERROR', payload: error });
+        }
     };
 
     const { name, submitted, error } = state;

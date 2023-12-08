@@ -1,0 +1,24 @@
+[33mcommit 63126b0a261ab9b6ec1b7f5104393d5ad32b9b83[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 3e95a70 87ea4b5
+Author: Apollynaria <a.polly.narii@gmail.com>
+Date:   Tue Nov 14 18:21:10 2023 +0800
+
+    Merge branch 'main' of github.com:Apollynaria/react_frontend
+
+[33mcommit 3e95a703e871311dd06943a031d0c0a28449f676[m
+Author: Apollynaria <a.polly.narii@gmail.com>
+Date:   Tue Nov 14 18:19:58 2023 +0800
+
+    api films
+
+[33mcommit 87ea4b50e10f156d5df86d1272ccd8ad735eb822[m
+Author: Polina <92095402+Apollynaria@users.noreply.github.com>
+Date:   Tue Oct 31 21:18:44 2023 +0800
+
+    Delete .gitignore
+
+[33mcommit 83d80423d57189d94b8fb50f7fb3f3b4635cbf25[m
+Author: Apollynaria <a.polly.narii@gmail.com>
+Date:   Tue Oct 31 21:16:56 2023 +0800
+
+    first commit

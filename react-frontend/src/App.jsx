@@ -60,7 +60,7 @@ class App extends React.Component {
                                     <Route path='/listMovies/:id' element={<Movies />} />
                                     <Route path='/addCategory' element={<AddCategory />} />
                                     <Route path='/addUser' element={<AddUser />} />
-                                    <Route path="/category/:id" element={<CategoryData />} />
+                                    <Route path="/category/:id" element={<CategoryProvider><CategoryData /></CategoryProvider>} />
                                     <Route path="/user/:id" element={<UserData />} />
                                 </Routes>
                             </Col>

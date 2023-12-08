@@ -1,14 +1,18 @@
-import React from 'react';
-import http from "../../http-common";
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Category from '../components/category/Category';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import CategoryType from '../types/CategoryType';
 import { useCategories } from './Categories.context';
 
 
 function Categories() {
-  const categories = useCategories();
+  const {categories} = useCategories();
+
+    useEffect(() => {
+        console.log(categories)
+    }, [])
 
   return (
     <div>
@@ -19,8 +23,8 @@ function Categories() {
       </Link>
       <ListGroup>
         {categories.length > 0 ? (
-          categories.map((category, index) => (
-            <Link to={`/category/${category.id}`} param1={category.id} key={index}>
+          categories.map((category: CategoryType) => (
+            <Link to={`/category/${category.id}`} key={category.id}>
               <ListGroup.Item>
                 <Category id={category.id} />
               </ListGroup.Item>
@@ -29,9 +33,6 @@ function Categories() {
         ) : "Подождите, идёт загрузка данных"}
       </ListGroup>
     </div>
-    //   <ListGroup>
-    //     {list.length > 0 ? list : "Подождите, идёт загрузка данных"}
-    //   </ListGroup>
   );
 }
 
